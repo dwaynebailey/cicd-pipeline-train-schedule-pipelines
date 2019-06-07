@@ -1,9 +1,12 @@
-pipeline [
-  stage "Build" {
-    sh "./gradlew build --no-daemon"
-    archiveArtifact {
-      pattern("dist/trainSchedule.zip")
-      onlyIfSuccessfull()
+pipeline {
+  agent any
+  stages {
+    stage ("Build") {
+      steps {
+        echo "Running build automation"
+        sh "./gradlew build --no-daemon"
+        archiveArtifacts artifact: "dist/trainSchedule.zip" onlyIfSuccessfull: true
+      }
     }
   }
-]
+}
